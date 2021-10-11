@@ -1,8 +1,10 @@
-package com.mongocrud.springcrudmongo.Controller;
+package com.mongocrud.springcrudmongo.controller;
 
-import com.mongocrud.springcrudmongo.Model.User;
-import com.mongocrud.springcrudmongo.Repositories.UserRepositiory;
-import com.mongocrud.springcrudmongo.Service.UserService;
+import com.mongocrud.springcrudmongo.exception.UserNotFoundException;
+import com.mongocrud.springcrudmongo.model.User;
+import com.mongocrud.springcrudmongo.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +14,8 @@ import java.util.List;
 @RequestMapping(value = "/user")
 public class UserController {
     private final UserService userService;
+
+    Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     public UserController(UserService userService){
@@ -25,12 +29,19 @@ public class UserController {
 
     @GetMapping("/view")
     public List<User> getUser(){
+        logger.info("Get All Users Controller");
         return userService.viewAll();
     }
 
     @GetMapping("/view/{id}")
     public User getById(@PathVariable String id){
-        return userService.viewUserId(id);
+        User user = userService.viewUserId(id);
+        logger.info("Get Perticular User Controller");
+        if(user == null){
+            logger.info("have problem here");
+            throw new UserNotFoundException("User not found"+ id);
+        }
+        return user;
     }
 
 //    @GetMapping("/view/{name}")
@@ -40,16 +51,19 @@ public class UserController {
 
     @PutMapping("/update/{id}")
     public void editUser(@RequestBody User user, @PathVariable String id){
+        logger.info("Edit User Controller");
         userService.updateUser(user,id);
     }
 
     @DeleteMapping("/delete/{id}")
     public String removeUser(@PathVariable String id){
+        logger.info("Delete Single User Controller");
         return userService.deleteUser(id);
     }
 
     @DeleteMapping("/delete")
     public void removeAll(){
+        logger.info("Delete All Users Controller");
         userService.deleteAll();
     }
 }

@@ -1,10 +1,8 @@
-package com.mongocrud.springcrudmongo.Repositories;
+package com.mongocrud.springcrudmongo.repositories;
 
-import com.mongocrud.springcrudmongo.Model.User;
+import com.mongocrud.springcrudmongo.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface UserRepositiory extends MongoRepository<User, String> {
