@@ -1,11 +1,15 @@
 package com.mongocrud.springcrudmongo.controller;
 
+import com.mongocrud.springcrudmongo.exception.BusinessException;
+import com.mongocrud.springcrudmongo.exception.ControllerException;
 import com.mongocrud.springcrudmongo.exception.UserNotFoundException;
 import com.mongocrud.springcrudmongo.model.User;
 import com.mongocrud.springcrudmongo.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,14 +38,18 @@ public class UserController {
     }
 
     @GetMapping("/view/{id}")
-    public User getById(@PathVariable String id){
-        User user = userService.viewUserId(id);
-        logger.info("Get Perticular User Controller");
-        if(user == null){
-            logger.info("have problem here");
-            throw new UserNotFoundException("User not found"+ id);
+    public ResponseEntity<?> getById(@PathVariable String id){
+        try{
+            User user = userService.viewUserId(id);
+            logger.info("Get Single User Controller");
+            return new ResponseEntity<User>(user,HttpStatus.OK);
+        }catch (BusinessException e){
+            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
+            return new ResponseEntity<ControllerException>(ce,HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            ControllerException ce = new ControllerException("610","Something Not Right");
+            return new ResponseEntity<ControllerException>(ce,HttpStatus.BAD_REQUEST);
         }
-        return user;
     }
 
 //    @GetMapping("/view/{name}")

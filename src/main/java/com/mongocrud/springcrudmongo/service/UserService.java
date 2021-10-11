@@ -1,6 +1,7 @@
 package com.mongocrud.springcrudmongo.service;
 
 import com.mongocrud.springcrudmongo.controller.UserController;
+import com.mongocrud.springcrudmongo.exception.BusinessException;
 import com.mongocrud.springcrudmongo.model.User;
 import com.mongocrud.springcrudmongo.repositories.UserRepositiory;
 import org.slf4j.Logger;
@@ -14,7 +15,7 @@ import java.util.List;
 public class UserService {
     private final UserRepositiory userRepositiory;
 
-    Logger logger = LoggerFactory.getLogger(UserController.class);
+    Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     public UserService(UserRepositiory userRepositiory){
@@ -35,8 +36,16 @@ public class UserService {
 
     // View User by id
     public User viewUserId(String id){
-        logger.info("View Single User Service");
-        return userRepositiory.findById(id).get();
+        try {
+            if(userRepositiory.findById(id).isEmpty()){
+                logger.info("User not found in database");
+                throw new BusinessException("602","User Not Found");
+            }
+            logger.info("View Single User Service");
+            return userRepositiory.findById(id).get();
+        }catch (Exception e){
+            throw new BusinessException("603","Something Went Wrong"+ e);
+        }
     }
 
     // View User by name

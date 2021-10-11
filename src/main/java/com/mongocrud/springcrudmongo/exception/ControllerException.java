@@ -1,16 +1,13 @@
 package com.mongocrud.springcrudmongo.exception;
 
-import org.springframework.stereotype.Component;
-
-@Component
-public class BusinessException extends RuntimeException {
+public class ControllerException extends RuntimeException{
     private String errorCode;
     private String errorMessage;
 
-    public BusinessException() {
+    public ControllerException() {
     }
 
-    public BusinessException(String errorCode, String errorMessage) {
+    public ControllerException(String errorCode, String errorMessage) {
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
     }
