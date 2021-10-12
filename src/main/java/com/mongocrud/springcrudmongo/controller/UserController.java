@@ -2,7 +2,6 @@ package com.mongocrud.springcrudmongo.controller;
 
 import com.mongocrud.springcrudmongo.exception.BusinessException;
 import com.mongocrud.springcrudmongo.exception.ControllerException;
-import com.mongocrud.springcrudmongo.exception.UserNotFoundException;
 import com.mongocrud.springcrudmongo.model.User;
 import com.mongocrud.springcrudmongo.service.UserService;
 import org.slf4j.Logger;
@@ -27,8 +26,15 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public void addUser(@RequestBody User user){
-        userService.AddUser(user);
+    public ResponseEntity<?> addUser(@RequestBody User user){
+        try{
+            User user1 = userService.AddUser(user);
+            return new ResponseEntity<User>(user1,HttpStatus.OK);
+        }catch (BusinessException e){
+            logger.info("catch business exception");
+            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
+            return new ResponseEntity<ControllerException>(ce,HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/view")
