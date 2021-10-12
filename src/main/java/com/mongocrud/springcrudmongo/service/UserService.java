@@ -36,20 +36,21 @@ public class UserService {
 
     // View User by id
     public User viewUserId(String id){
+        if(userRepositiory.findById(id).isEmpty()){
+            logger.info("User not found in database");
+            throw new BusinessException("601","User Not Found");
+        }
         try {
-            if(userRepositiory.findById(id).isEmpty()){
-                logger.info("User not found in database");
-                throw new BusinessException("602","User Not Found");
-            }
             logger.info("View Single User Service");
             return userRepositiory.findById(id).get();
         }catch (Exception e){
-            throw new BusinessException("603","Something Went Wrong"+ e);
+            throw new BusinessException("602","Something Went Wrong"+ e);
         }
     }
 
     // View User by name
 //    public User viewUserName(String name){
+//        logger.info("Get User By Name Controller");
 //        return userRepositiory.findByName(name);
 //    }
 

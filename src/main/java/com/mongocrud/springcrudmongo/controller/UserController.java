@@ -44,16 +44,19 @@ public class UserController {
             logger.info("Get Single User Controller");
             return new ResponseEntity<User>(user,HttpStatus.OK);
         }catch (BusinessException e){
+            logger.info("catch business exception");
             ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
             return new ResponseEntity<ControllerException>(ce,HttpStatus.BAD_REQUEST);
         }catch (Exception e){
-            ControllerException ce = new ControllerException("610","Something Not Right");
+            logger.info("catch general exception");
+            ControllerException ce = new ControllerException("610","Something Not Right In Controller");
             return new ResponseEntity<ControllerException>(ce,HttpStatus.BAD_REQUEST);
         }
     }
 
 //    @GetMapping("/view/{name}")
 //    public User getByName(@PathVariable String name){
+//        logger.info("Get User By Name Controller");
 //        return userService.viewUserName(name);
 //    }
 
