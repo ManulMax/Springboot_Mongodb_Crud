@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-//@RequestMapping(value = "/user")
+@RequestMapping(value = "/user")
 public class UserController {
     private final UserService userService;
 
@@ -29,18 +29,31 @@ public class UserController {
     public ResponseEntity<?> addUser(@RequestBody User user){
         try{
             User user1 = userService.AddUser(user);
-            return new ResponseEntity<User>(user1,HttpStatus.OK);
+            return new ResponseEntity<>(user1,HttpStatus.CREATED);
         }catch (BusinessException e){
-            logger.info("catch business exception");
+            logger.info("catch business exception in Add User Controller");
             ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
-            return new ResponseEntity<ControllerException>(ce,HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(ce,HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            ControllerException ce = new ControllerException("710","Something Went Wrong In Controller");
+            return new ResponseEntity<>(ce,HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/view")
-    public List<User> getUser(){
-        logger.info("Get All Users Controller");
-        return userService.viewAll();
+    public ResponseEntity<?> getUser(){
+        try{
+            logger.info("Get All Users Controller");
+            List<User> getUser = userService.viewAll();
+            return new ResponseEntity<>(getUser,HttpStatus.OK);
+        }catch (BusinessException e){
+            logger.info("catch business exception in View all User Controller");
+            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
+            return new ResponseEntity<>(ce,HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            ControllerException ce = new ControllerException("710","Something Went Wrong In Controller");
+            return new ResponseEntity<>(ce,HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/view/{id}")
@@ -48,34 +61,39 @@ public class UserController {
         try{
             User user = userService.viewUserId(id);
             logger.info("Get Single User Controller");
-            return new ResponseEntity<User>(user,HttpStatus.OK);
+            return new ResponseEntity<>(user,HttpStatus.OK);
         }catch (BusinessException e){
-            logger.info("catch business exception");
+            logger.info("catch business exception in get user by id");
             ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
-            return new ResponseEntity<ControllerException>(ce,HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(ce,HttpStatus.BAD_REQUEST);
         }catch (Exception e){
-            logger.info("catch general exception");
+            logger.info("catch general exception in get user by id");
             ControllerException ce = new ControllerException("610","Something Not Right In Controller");
-            return new ResponseEntity<ControllerException>(ce,HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(ce,HttpStatus.BAD_REQUEST);
         }
     }
 
-//    @GetMapping("/view/{name}")
-//    public User getByName(@PathVariable String name){
-//        logger.info("Get User By Name Controller");
-//        return userService.viewUserName(name);
-//    }
-
     @PutMapping("/update/{id}")
-    public void editUser(@RequestBody User user, @PathVariable String id){
-        logger.info("Edit User Controller");
-        userService.updateUser(user,id);
+    public ResponseEntity<?> editUser(@RequestBody User user, @PathVariable String id){
+        try{
+            logger.info("Edit User Controller");
+            User user1 = userService.updateUser(user,id);
+            return new ResponseEntity<>(user1,HttpStatus.OK);
+        }catch (BusinessException e){
+            logger.info("catch business exception in update user");
+            ControllerException ce = new ControllerException(e.getErrorCode(),e.getErrorMessage());
+            return new ResponseEntity<>(ce,HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            logger.info("catch general exception in get update");
+            ControllerException ce = new ControllerException("610","Something Not Right In Controller");
+            return new ResponseEntity<>(ce,HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/delete/{id}")
-    public String removeUser(@PathVariable String id){
+    public void removeUser(@PathVariable String id){
         logger.info("Delete Single User Controller");
-        return userService.deleteUser(id);
+        userService.deleteUser(id);
     }
 
     @DeleteMapping("/delete")
@@ -83,4 +101,10 @@ public class UserController {
         logger.info("Delete All Users Controller");
         userService.deleteAll();
     }
+
+//    @GetMapping("/view/{name}")
+//    public User getByName(@PathVariable String name){
+//        logger.info("Get User By Name Controller");
+//        return userService.viewUserName(name);
+//    }
 }

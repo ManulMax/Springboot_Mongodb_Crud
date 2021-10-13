@@ -1,6 +1,5 @@
 package com.mongocrud.springcrudmongo.service;
 
-import com.mongocrud.springcrudmongo.controller.UserController;
 import com.mongocrud.springcrudmongo.exception.BusinessException;
 import com.mongocrud.springcrudmongo.model.User;
 import com.mongocrud.springcrudmongo.repositories.UserRepositiory;
@@ -29,9 +28,14 @@ public class UserService {
             logger.info("User Already In Database");
             throw new BusinessException("601","User Alredy Added");
         }
+        if(user.getId().isEmpty() || user.getName().length() == 0 || user.getId().length() == 0){
+            throw new BusinessException("611","Id or Name Cannot Be Null ");
+        }
         try {
             logger.info("Adding User to db");
             return userRepositiory.save(user);
+        }catch (NullPointerException e){
+            throw new BusinessException("605","Given Id Is Null "+ e.getMessage());
         }
         catch (Exception e){
             throw new BusinessException("602","Something Went Wrong"+ e);
@@ -55,10 +59,6 @@ public class UserService {
 
     // View User by id
     public User viewUserId(String id){
-//        if(userRepositiory.findById(id).isEmpty()){
-//            logger.info("User not found in database");
-//            throw new BusinessException("604","User Not Found");
-//        }
         try {
             logger.info("View Single User Service");
             return userRepositiory.findById(id).get();
@@ -69,17 +69,17 @@ public class UserService {
         }
     }
 
-    // View User by name
-//    public User viewUserName(String name){
-//        logger.info("Get User By Name Controller");
-//        return userRepositiory.findByName(name);
-//    }
-
     // Update User
-    public void updateUser(User user,String id){
-        if(userRepositiory.findById(id).isPresent()){
+    public User updateUser(User user,String id){
+        if(user.getId().isEmpty() || user.getName().length() == 0 || id.length() == 0){
+            throw new BusinessException("612","Cannot Update Added Data Error ");
+        }
+        if(userRepositiory.findById(id).isPresent() && user.getId().equals(id)){
             logger.info("Update Single User Service");
-            userRepositiory.save(user);
+            return userRepositiory.save(user);
+        }
+        else {
+            throw new BusinessException("614","Cannot Find User In Databsase");
         }
     }
 
@@ -90,7 +90,7 @@ public class UserService {
     }
 
     //Delete by Id
-    public String deleteUser(String id){
+    public void deleteUser(String id){
         if(userRepositiory.findById(id).isEmpty()){
             logger.info("User Not Found to delete");
             throw new BusinessException("608","Not Found To Delete");
@@ -100,6 +100,12 @@ public class UserService {
         }catch (Exception e){
             throw new BusinessException("602","Something Went Wrong"+e);
         }
-        return "not found";
     }
+
+    // View User by name
+//    public User viewUserName(String name){
+//        logger.info("Get User By Name Controller");
+//        return userRepositiory.findByName(name);
+//    }
+
 }
