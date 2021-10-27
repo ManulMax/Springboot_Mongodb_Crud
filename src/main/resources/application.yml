@@ -1,0 +1,11 @@
+#server:
+#  port: 8080
+#  servlet:
+#    context-path: /user
+#
+#spring:
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://localhost:8081/auth/realms/test-realm-springboot

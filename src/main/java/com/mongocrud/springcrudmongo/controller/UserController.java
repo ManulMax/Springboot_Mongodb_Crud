@@ -4,6 +4,7 @@ import com.mongocrud.springcrudmongo.exception.BusinessException;
 import com.mongocrud.springcrudmongo.exception.ControllerException;
 import com.mongocrud.springcrudmongo.model.User;
 import com.mongocrud.springcrudmongo.service.UserService;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +97,7 @@ public class UserController {
         userService.deleteUser(id);
     }
 
+    @Hidden
     @DeleteMapping("/delete")
     public void removeAll(){
         logger.info("Delete All Users Controller");
