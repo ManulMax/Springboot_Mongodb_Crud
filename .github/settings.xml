@@ -12,6 +12,9 @@
             <id>restrata-maven-s3-snapshot-repo</id>
             <username>${env.AWS_ACCESS_KEY_ID}</username>
             <password>${env.AWS_SECRET_ACCESS_KEY}</password>
+            <configuration>
+                    <wagonProvider>httpclient</wagonProvider>
+            </configuration>
         </server>
     </servers>
 </settings>
