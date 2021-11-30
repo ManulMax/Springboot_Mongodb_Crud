@@ -4,12 +4,12 @@
                           https://maven.apache.org/xsd/settings-1.0.0.xsd">
     <servers>
         <server>
-            <id>restrata-maven-s3-release-repo</id>
+            <id>xapi-maven-s3-release-repo</id>
             <username>${env.AWS_ACCESS_KEY_ID}</username>
             <password>${env.AWS_SECRET_ACCESS_KEY}</password>
         </server>
         <server>
-            <id>restrata-maven-s3-snapshot-repo</id>
+            <id>xapi-maven-s3-snapshot-repo</id>
             <username>${env.AWS_ACCESS_KEY_ID}</username>
             <password>${env.AWS_SECRET_ACCESS_KEY}</password>
             <configuration>
