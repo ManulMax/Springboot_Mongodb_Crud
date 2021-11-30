@@ -117,7 +117,12 @@
             <url>s3://mytestbkt02/releases/</url>
         </repository>
         <repository>
-            <snapshots/>
+            <snapshots>
+                  <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                  <enabled>false</enabled>
+            </releases>
             <id>xapi-maven-s3-snapshot-repo</id>
             <name>libs-snapshot</name>
             <url>s3://mytestbkt02/snapshots/</url>
@@ -131,7 +136,6 @@
       <id>xapi-maven-s3-release-repo</id>
       <name>AWS S3 Release</name>
       <url>s3://mytestbkt02/releases/</url>
-      <layout>default</layout>
     </repository>
            
     <snapshotRepository>
