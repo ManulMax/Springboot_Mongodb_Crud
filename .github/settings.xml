@@ -4,17 +4,14 @@
                           https://maven.apache.org/xsd/settings-1.0.0.xsd">
     <servers>
         <server>
-            <id>xapi-maven-s3-release-repo</id>
+            <id>s3-release</id>
             <username>${env.AWS_ACCESS_KEY_ID}</username>
             <password>${env.AWS_SECRET_ACCESS_KEY}</password>
         </server>
         <server>
-            <id>xapi-maven-s3-snapshot-repo</id>
+            <id>s3-snapshot</id>
             <username>${env.AWS_ACCESS_KEY_ID}</username>
             <password>${env.AWS_SECRET_ACCESS_KEY}</password>
-            <configuration>
-                    <wagonProvider>httpclient</wagonProvider>
-            </configuration>
         </server>
     </servers>
 </settings>
