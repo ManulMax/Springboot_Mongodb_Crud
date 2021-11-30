@@ -113,7 +113,7 @@
       <uniqueVersion>false</uniqueVersion>
       <id>maven-s3-release-repo</id>
       <name>AWS S3 Release</name>
-      <url>s3://repo.mongocrud/releases</url>
+      <url>s3://mytestbkt02/releases</url>
       <layout>default</layout>
     </repository>
            
@@ -121,7 +121,7 @@
       <uniqueVersion>true</uniqueVersion>
       <id>maven-s3-snapshot-repo</id>
       <name>AWS S3 Snapshot</name>
-      <url>s3://repo.mongocrud/snapshots</url>
+      <url>s3://mytestbkt02/snapshots</url>
     </snapshotRepository>
            
   </distributionManagement>
