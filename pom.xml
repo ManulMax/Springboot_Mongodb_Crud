@@ -107,7 +107,7 @@
         <finalName>test_app</finalName>
     </build>
 
-    <repositories>
+<!--     <repositories>
         <repository>
             <snapshots>
                 <enabled>false</enabled>
@@ -127,20 +127,20 @@
             <name>libs-snapshot</name>
             <url>s3://mytestbkt01/snapshots</url>
         </repository>
-    </repositories>
+    </repositories> -->
          
     <distributionManagement>
     <repository>
       <uniqueVersion>false</uniqueVersion>
-      <id>xapi-maven-s3-release-repo</id>
+      <id>s3-release</id>
       <name>AWS S3 Release</name>
-      <url>s3://mytestbkt01/releases/</url>
+      <url>s3://mytestbkt01/release</url>
     </repository>
     <snapshotRepository>
       <uniqueVersion>true</uniqueVersion>
-      <id>xapi-maven-s3-snapshot-repo</id>
+      <id>s3-snapshot</id>
       <name>AWS S3 Snapshot</name>
-      <url>s3://mytestbkt01/snapshots/</url>
+      <url>s3://mytestbkt01/snapshot</url>
     </snapshotRepository>
   </distributionManagement>
 </project>
