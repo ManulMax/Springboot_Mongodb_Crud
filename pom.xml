@@ -114,7 +114,7 @@
             </snapshots>
             <id>xapi-maven-s3-release-repo</id>
             <name>libs-release</name>
-            <url>s3://mytestbkt02/releases/</url>
+            <url>s3://mytestbkt01/releases/</url>
         </repository>
         <repository>
             <snapshots>
@@ -125,7 +125,7 @@
             </releases>
             <id>xapi-maven-s3-snapshot-repo</id>
             <name>libs-snapshot</name>
-            <url>s3://mytestbkt02/snapshots/</url>
+            <url>s3://mytestbkt01/snapshots/</url>
         </repository>
     </repositories>
          
@@ -135,14 +135,14 @@
       <uniqueVersion>false</uniqueVersion>
       <id>xapi-maven-s3-release-repo</id>
       <name>AWS S3 Release</name>
-      <url>s3://mytestbkt02/releases/</url>
+      <url>s3://mytestbkt01/releases/</url>
     </repository>
            
     <snapshotRepository>
       <uniqueVersion>true</uniqueVersion>
       <id>xapi-maven-s3-snapshot-repo</id>
       <name>AWS S3 Snapshot</name>
-      <url>s3://mytestbkt02/snapshots/</url>
+      <url>s3://mytestbkt01/snapshots/</url>
     </snapshotRepository>
            
   </distributionManagement>
